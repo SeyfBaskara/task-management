@@ -7,7 +7,7 @@ const store = configureStore({
    },
 })
 
-type RootState = ReturnType<typeof store.getState>
-export const selectTasks = (state: RootState) => state.tasks.tasks
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
 export default store
