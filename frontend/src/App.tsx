@@ -1,10 +1,13 @@
 import React from 'react'
 import './App.css'
+import TaskInput from './components/tasksInput/TaskInput'
+import Tasks from './components/tasks/Tasks'
 
 function App() {
    return (
       <div className="App">
-         <h1>Task management</h1>
+         <TaskInput />
+         <Tasks />
       </div>
    )
 }
