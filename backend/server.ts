@@ -1,7 +1,6 @@
-import dotenv from 'dotenv'
+import 'dotenv/config'
 import app from './src/index'
 
-dotenv.config()
 const port = process.env.PORT
 
 app.listen(port, (): void => {
