@@ -12,9 +12,19 @@ const Tasks: React.FC = () => {
    }, [dispatch])
 
    return (
-      <article className="tasks">
-         {isLoading ? <h3>Loading...</h3> : tasks.map((task) => <Task key={task.id} task={task} />)}
-      </article>
+      <section className="tasks">
+         {isLoading ? (
+            <h3>Loading...</h3>
+         ) : (
+            <ul>
+               {tasks.map((task) => (
+                  <li key={task._id}>
+                     <Task task={task} />
+                  </li>
+               ))}
+            </ul>
+         )}
+      </section>
    )
 }
 

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import * as API from '../../api/index'
 import { ITasks } from '../../types'
 
@@ -24,6 +24,18 @@ export const createTask = createAsyncThunk('createTask', async (newTask: ITasks,
    return data
 })
 
+export const updateTask = createAsyncThunk('updateTask', async (updatedTask: ITasks, thunkAPI) => {
+   const newUpdatedTask = {
+      completed: updatedTask.completed,
+   }
+   const { data } = await API.updateTask(updatedTask._id!, newUpdatedTask)
+   return data
+})
+export const deleteTask = createAsyncThunk('deleteTask', async (id: string, thunkAPI) => {
+   const { data } = await API.deleteTask(id)
+   return data
+})
+
 export const taskSlice = createSlice({
    name: 'task',
    initialState,
@@ -32,7 +44,7 @@ export const taskSlice = createSlice({
       builder.addCase(fetchTasks.pending, (state) => {
          state.isLoading = true
       })
-      builder.addCase(fetchTasks.fulfilled, (state, action) => {
+      builder.addCase(fetchTasks.fulfilled, (state, action: PayloadAction<ITasks[]>) => {
          state.isLoading = false
          state.tasks = action.payload
       })
@@ -40,12 +52,27 @@ export const taskSlice = createSlice({
          state.isLoading = true
          state.tasks = []
       })
-      builder.addCase(createTask.fulfilled, (state, action) => {
+      builder.addCase(createTask.fulfilled, (state, action: PayloadAction<ITasks>) => {
          state.error = false
-         state.tasks = action.payload
+         state.tasks = [...state.tasks, action.payload]
       })
-      builder.addCase(createTask.rejected, (state, action) => {
-         console.log(action)
+      builder.addCase(createTask.rejected, (state) => {
+         state.error = true
+      })
+      builder.addCase(updateTask.fulfilled, (state, action: PayloadAction<ITasks>) => {
+         state.error = false
+         state.tasks = state.tasks.map((task) =>
+            task._id === action.payload._id ? { ...task, completed: action.payload.completed } : task
+         )
+      })
+      builder.addCase(updateTask.rejected, (state) => {
+         state.error = true
+      })
+      builder.addCase(deleteTask.fulfilled, (state, action: PayloadAction<ITasks>) => {
+         state.error = false
+         state.tasks = state.tasks.filter((task) => task._id !== action.payload._id)
+      })
+      builder.addCase(deleteTask.rejected, (state) => {
          state.error = true
       })
    },

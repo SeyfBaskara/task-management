@@ -31,18 +31,18 @@ export const updateTask = async (req: Request, res: Response) => {
 
    if (!isValidoperation) {
       res.status(400).json({ error: 'Invalid updates!' })
-   }
+   } else {
+      try {
+         const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
 
-   try {
-      const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+         if (!task) {
+            res.status(404).json()
+         }
 
-      if (!task) {
-         res.status(404).json()
+         res.status(201).json(task)
+      } catch (error) {
+         res.status(400).json({ message: error.message })
       }
-
-      res.status(201).json(task)
-   } catch (error) {
-      res.status(400).json({ message: error.message })
    }
 }
 
@@ -54,7 +54,7 @@ export const deleteTask = async (req: Request, res: Response) => {
          res.status(404).json()
       }
 
-      res.json({ message: 'Task deleted succesfully' })
+      res.json(task)
    } catch (error) {
       res.status(500).json({ message: error.message })
    }
