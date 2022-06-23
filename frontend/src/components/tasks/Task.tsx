@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import './Tasks.css'
 import { ITasks } from '../../types'
 import { useAppDispatch } from '../../redux/hooks'
 import { updateTask, deleteTask } from '../../redux/task/taskSlice'
@@ -8,9 +9,11 @@ interface IProps {
 }
 
 const Task = ({ task }: IProps): JSX.Element => {
+   const [isEdit, setIsEdit] = useState(false)
+   const [title, setTitle] = useState(task.title)
    const dispatch = useAppDispatch()
 
-   const onChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const onChangeCheckboxHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
       const updatedTask = {
          completed: e.target.checked,
          _id: task._id,
@@ -22,13 +25,40 @@ const Task = ({ task }: IProps): JSX.Element => {
       dispatch(deleteTask(id))
    }
 
+   const onChangeEditHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setTitle(e.target.value)
+   }
+   const handleEdit = (id: string) => {
+      setIsEdit(!isEdit)
+      const updatedTask = {
+         title,
+         _id: id,
+      }
+      if (isEdit) {
+         dispatch(updateTask(updatedTask))
+      }
+   }
+
    return (
       <>
-         <a href={`/#${task._id}`} style={task.completed ? { color: 'green' } : { color: 'black' }}>
-            {task.title}
-         </a>
-         <input type="checkbox" checked={task.completed} onChange={onChangeHandle} />
-         <button onClick={() => handleDelete(task._id!)}>Delete</button>
+         <div className="task__item">
+            {isEdit ? (
+               <input type="text" value={title} onChange={onChangeEditHandle} />
+            ) : (
+               <a
+                  href={`/#${task._id}`}
+                  className="task__item-title"
+                  style={task.completed ? { color: 'green' } : { color: 'black' }}
+               >
+                  {task.title}
+               </a>
+            )}
+            <div className="task__item-handler">
+               <input type="checkbox" checked={task.completed} onChange={onChangeCheckboxHandle} />
+               <button onClick={() => handleDelete(task._id!)}>Delete</button>
+               <button onClick={() => handleEdit(task._id!)}>{!isEdit ? 'Edit' : 'Add'}</button>
+            </div>
+         </div>
       </>
    )
 }

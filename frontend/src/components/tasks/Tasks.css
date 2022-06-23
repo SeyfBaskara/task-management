@@ -1,0 +1,25 @@
+.tasks {
+   margin: 0;
+   padding: 0 2rem;
+}
+.tasks__task {
+   padding: 0.5rem 0;
+   list-style: none;
+}
+
+.task__item {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   border: 1px solid black;
+   padding: 1rem;
+}
+.task__item-title {
+   text-decoration: none;
+}
+
+.task__item-handler {
+   display: flex;
+   width: 25%;
+   justify-content: space-between;
+}

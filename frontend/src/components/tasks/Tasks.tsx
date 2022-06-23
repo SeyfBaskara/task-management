@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import './Tasks.css'
 import Task from './Task'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { fetchTasks } from '../../redux/task/taskSlice'
@@ -12,13 +13,13 @@ const Tasks: React.FC = () => {
    }, [dispatch])
 
    return (
-      <section className="tasks">
+      <section className="tasks__container">
          {isLoading ? (
             <h3>Loading...</h3>
          ) : (
-            <ul>
+            <ul className="tasks">
                {tasks.map((task) => (
-                  <li key={task._id}>
+                  <li key={task._id} className="tasks__task">
                      <Task task={task} />
                   </li>
                ))}

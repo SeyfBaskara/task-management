@@ -1,32 +1,36 @@
-import React, { useState } from 'react'
-import { useAppDispatch } from '../../redux/hooks'
-import { createTask } from '../../redux/task/taskSlice'
-
-interface ITasks {
-   title: string
-   completed: boolean
-}
+import React from 'react'
+import './TaskInput.css'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { createTask, setAddTask } from '../../redux/task/taskSlice'
 
 const TaskInput: React.FC = () => {
-   const [task, setTask] = useState<ITasks>({ title: '', completed: false })
+   const { title, completed } = useAppSelector((state) => state.tasks)
    const dispatch = useAppDispatch()
 
    const addHandler = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      dispatch(createTask(task))
+      dispatch(createTask({ title, completed }))
 
-      setTask({ ...task, title: '' })
+      dispatch(setAddTask(''))
    }
    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target
-      setTask({ ...task, [name]: value })
+      dispatch(setAddTask(e.target.value))
    }
    return (
-      <section>
-         <h1>Add a Task</h1>
+      <section className="taskinput__container">
+         <h1>Task Management</h1>
          <form onSubmit={addHandler}>
-            <input type="text" name="title" value={task.title} placeholder="Enter a Task..." onChange={onChangeHandler} />
-            <button type="submit">ADD</button>
+            <input
+               type="text"
+               className="taskinput__field-title"
+               name="title"
+               value={title}
+               placeholder="Add a Task..."
+               onChange={onChangeHandler}
+            />
+            <button type="submit" className="taskinput__submit-btn">
+               Add New Task
+            </button>
          </form>
       </section>
    )

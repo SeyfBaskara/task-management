@@ -1,15 +1,19 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import * as API from '../../api/index'
-import { ITasks } from '../../types'
+import { ITasks, IUpdate } from '../../types'
 
 interface ITasksSliceState {
    tasks: ITasks[]
-   isLoading: Boolean
-   error: Boolean
+   title: string
+   completed: boolean
+   isLoading: boolean
+   error: boolean
 }
 
 const initialState: ITasksSliceState = {
    tasks: [],
+   title: '',
+   completed: false,
    isLoading: false,
    error: false,
 }
@@ -24,9 +28,10 @@ export const createTask = createAsyncThunk('createTask', async (newTask: ITasks,
    return data
 })
 
-export const updateTask = createAsyncThunk('updateTask', async (updatedTask: ITasks, thunkAPI) => {
+export const updateTask = createAsyncThunk('updateTask', async (updatedTask: IUpdate, thunkAPI) => {
    const newUpdatedTask = {
       completed: updatedTask.completed,
+      title: updatedTask.title,
    }
    const { data } = await API.updateTask(updatedTask._id!, newUpdatedTask)
    return data
@@ -39,7 +44,11 @@ export const deleteTask = createAsyncThunk('deleteTask', async (id: string, thun
 export const taskSlice = createSlice({
    name: 'task',
    initialState,
-   reducers: {},
+   reducers: {
+      setAddTask(state, action: PayloadAction<string>) {
+         state.title = action.payload
+      },
+   },
    extraReducers: (builder) => {
       builder.addCase(fetchTasks.pending, (state) => {
          state.isLoading = true
@@ -62,7 +71,13 @@ export const taskSlice = createSlice({
       builder.addCase(updateTask.fulfilled, (state, action: PayloadAction<ITasks>) => {
          state.error = false
          state.tasks = state.tasks.map((task) =>
-            task._id === action.payload._id ? { ...task, completed: action.payload.completed } : task
+            task._id === action.payload._id
+               ? {
+                    ...task,
+                    completed: action.payload.completed,
+                    title: action.payload.title,
+                 }
+               : task
          )
       })
       builder.addCase(updateTask.rejected, (state) => {
@@ -78,6 +93,6 @@ export const taskSlice = createSlice({
    },
 })
 
-// export const {} = taskSlice.actions
+export const { setAddTask } = taskSlice.actions
 
 export default taskSlice.reducer
