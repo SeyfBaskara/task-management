@@ -16,7 +16,7 @@ export const createTask = async (req: Request, res: Response) => {
 
 export const getTasks = async (_req: Request, res: Response) => {
    try {
-      const tasks = await Task.find()
+      const tasks = await Task.find({}).populate({ path: 'subTask' })
 
       res.status(200).json(tasks)
    } catch (error) {
@@ -37,9 +37,9 @@ export const updateTask = async (req: Request, res: Response) => {
 
          if (!task) {
             res.status(404).json()
+         } else {
+            res.status(201).json(task)
          }
-
-         res.status(201).json(task)
       } catch (error) {
          res.status(400).json({ message: error.message })
       }
@@ -52,9 +52,9 @@ export const deleteTask = async (req: Request, res: Response) => {
 
       if (!task) {
          res.status(404).json()
+      } else {
+         res.json(task)
       }
-
-      res.json(task)
    } catch (error) {
       res.status(500).json({ message: error.message })
    }

@@ -1,25 +1,27 @@
 import { Schema, model } from 'mongoose'
 import { v4 as uuidv4 } from 'uuid'
 
-interface ITask {
+interface ISubTask {
    _id: string
-   title: string
+   description: string
+   price: number
    completed: boolean
-   subTask: string
 }
 
-const taskSchema = new Schema<ITask>({
+const subTaskSchema = new Schema<ISubTask>({
    _id: { type: String, default: uuidv4 },
-   title: {
+   description: {
       type: String,
       required: true,
+   },
+   price: {
+      type: Number,
    },
    completed: {
       type: Boolean,
    },
-   subTask: [{ type: String, ref: 'SubTask' }],
 })
 
-const Task = model<ITask>('Task', taskSchema)
+const SubTask = model<ISubTask>('SubTask', subTaskSchema)
 
-export default Task
+export default SubTask
