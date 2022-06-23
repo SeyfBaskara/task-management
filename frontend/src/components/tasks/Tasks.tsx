@@ -33,7 +33,7 @@ const Tasks: React.FC = () => {
                           )
                        )
                     })}
-               {isEmpty && <h3>You have not completed any tasks yet!</h3>}
+               {isEmpty && <h3>You have not completed any task yet!</h3>}
             </ul>
          )}
       </section>
