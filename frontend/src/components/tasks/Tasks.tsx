@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import './Tasks.css'
 import Task from './Task'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { fetchTasks } from '../../redux/task/taskSlice'
 
 const Tasks: React.FC = () => {
    const dispatch = useAppDispatch()
-   const { tasks, isLoading } = useAppSelector((state) => state.tasks)
+   const { tasks, isLoading, isCompleted } = useAppSelector((state) => state.tasks)
+   const isEmpty = tasks.every((task) => task.completed !== isCompleted)
 
    useEffect(() => {
       dispatch(fetchTasks())
@@ -18,11 +18,22 @@ const Tasks: React.FC = () => {
             <h3>Loading...</h3>
          ) : (
             <ul className="tasks">
-               {tasks.map((task) => (
-                  <li key={task._id} className="tasks__task">
-                     <Task task={task} />
-                  </li>
-               ))}
+               {!isCompleted
+                  ? tasks.map((task) => (
+                       <li key={task._id} className="tasks__task">
+                          <Task task={task} />
+                       </li>
+                    ))
+                  : tasks.map((task) => {
+                       return (
+                          task.completed === isCompleted && (
+                             <li key={task._id} className="tasks__task">
+                                <Task task={task} />
+                             </li>
+                          )
+                       )
+                    })}
+               {isEmpty && <h3>You have not completed any tasks yet!</h3>}
             </ul>
          )}
       </section>

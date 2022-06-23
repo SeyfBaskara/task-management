@@ -6,6 +6,7 @@ interface ITasksSliceState {
    tasks: ITasks[]
    title: string
    completed: boolean
+   isCompleted: boolean
    isLoading: boolean
    error: boolean
 }
@@ -14,6 +15,7 @@ const initialState: ITasksSliceState = {
    tasks: [],
    title: '',
    completed: false,
+   isCompleted: false,
    isLoading: false,
    error: false,
 }
@@ -47,6 +49,9 @@ export const taskSlice = createSlice({
    reducers: {
       setAddTask(state, action: PayloadAction<string>) {
          state.title = action.payload
+      },
+      setIsCompleted(state, action: PayloadAction<boolean>) {
+         state.isCompleted = action.payload
       },
    },
    extraReducers: (builder) => {
@@ -93,6 +98,6 @@ export const taskSlice = createSlice({
    },
 })
 
-export const { setAddTask } = taskSlice.actions
+export const { setAddTask, setIsCompleted } = taskSlice.actions
 
 export default taskSlice.reducer

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './Tasks.css'
 import { ITasks } from '../../types'
 import { useAppDispatch } from '../../redux/hooks'
 import { updateTask, deleteTask } from '../../redux/task/taskSlice'

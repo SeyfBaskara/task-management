@@ -1,5 +1,4 @@
 import React from 'react'
-import './TaskInput.css'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { createTask, setAddTask } from '../../redux/task/taskSlice'
 
