@@ -25,13 +25,12 @@ const SubTaskItem = ({ subTaskItem }: IProps): JSX.Element => {
    return (
       <>
          <div className="subtaskitem">
-            <p>&#45; {subTaskItem.description}</p>
-            <p>Cost: {subTaskItem.price}</p>
+            <p style={subTaskItem.completed ? { color: 'green' } : { color: 'black' }}>&#45; {subTaskItem.description}</p>
+            <p style={subTaskItem.completed ? { color: 'green' } : { color: 'black' }}>Cost: {subTaskItem.price}$</p>
          </div>
          <div className="subtaskitem-handler">
             <input type="checkbox" checked={subTaskItem.completed} onChange={subTaskItemCheckboxHandle} />
             <button onClick={() => handleDelete(subTaskItem._id!)}>Delete</button>
-            {/* <button onClick={() => handleEdit(task._id!)}>{!isEdit ? 'Edit' : 'Add'}</button> */}
          </div>
       </>
    )

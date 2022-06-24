@@ -44,7 +44,7 @@ const Task = ({ task }: IProps): JSX.Element => {
          <section className="task">
             <div className="task__item">
                {isEdit ? (
-                  <input type="text" value={title} onChange={onChangeEditHandle} />
+                  <input type="text" value={title} onChange={onChangeEditHandle} className="task__item-editInput" />
                ) : (
                   <a
                      href={`/#${task._id}`}

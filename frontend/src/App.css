@@ -2,6 +2,7 @@
    width: 50%;
    margin: 2rem auto;
    background-color: whitesmoke;
+   padding-bottom: 5rem;
 }
 
 /*TASK INPUT*/
@@ -47,8 +48,15 @@
    align-items: center;
    padding: 1rem;
 }
+.task__item-editInput {
+   padding: 8px 20px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   width: 50%;
+}
 .task__item-title {
    text-decoration: none;
+   padding: 8px 0;
 }
 
 .task__item-handler {
@@ -80,6 +88,8 @@
    justify-content: space-between;
    align-items: center;
    padding: 0 1rem;
+   border-bottom: 1px solid black;
+   padding-bottom: 0.7rem;
 }
 .subtask__form-inputs {
    display: flex;
@@ -125,7 +135,6 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
-
    margin: 0;
 }
 .subtaskitem {
