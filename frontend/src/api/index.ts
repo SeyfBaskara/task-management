@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { ITasks, IUpdate, ISubTask, ISubUpdate } from '../types'
 
-const url = 'http://localhost:5000/api/tasks'
-const subTaskUrl = 'http://localhost:5000/api/subtask'
+const url = 'https://salt-task-management.herokuapp.com/api/tasks'
+const subTaskUrl = 'https://salt-task-management.herokuapp.com/api/subtask'
 
 export const fetchTasks = () => axios.get(url)
 export const createTask = (newTask: ITasks) => axios.post(`${url}/create`, newTask)
