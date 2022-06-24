@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import Task from '../models/Task'
+import SubTask from '../models/SubTask'
 
 export const createTask = async (req: Request, res: Response) => {
    const { title, completed } = req.body
@@ -49,6 +50,7 @@ export const updateTask = async (req: Request, res: Response) => {
 export const deleteTask = async (req: Request, res: Response) => {
    try {
       const task = await Task.findByIdAndDelete(req.params.id)
+      await SubTask.deleteMany({ taskID: req.params.id })
 
       if (!task) {
          res.status(404).json()

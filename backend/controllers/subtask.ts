@@ -5,7 +5,7 @@ import Task from '../models/Task'
 export const createSubTask = async (req: Request, res: Response) => {
    const { description, completed, price } = req.body
 
-   const newSubTask = new SubTask({ description, completed, price })
+   const newSubTask = new SubTask({ description, completed, price, taskID: req.params.id })
 
    try {
       await Task.findByIdAndUpdate(req.params.id, { $push: { subTask: newSubTask } }, { new: true, runValidators: true })
