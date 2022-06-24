@@ -2,14 +2,16 @@ import React, { useEffect } from 'react'
 import Task from './Task'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { fetchTasks } from '../../redux/task/taskSlice'
+import { fetchSubTasks } from '../../redux/task/subTaskSlice'
 
 const Tasks: React.FC = () => {
    const dispatch = useAppDispatch()
    const { tasks, isLoading, isCompleted } = useAppSelector((state) => state.tasks)
-   const isEmpty = tasks.every((task) => task.completed !== isCompleted)
+   // const isEmpty = tasks.every((task) => task.completed !== isCompleted)
 
    useEffect(() => {
       dispatch(fetchTasks())
+      dispatch(fetchSubTasks())
    }, [dispatch])
 
    return (
@@ -33,7 +35,7 @@ const Tasks: React.FC = () => {
                           )
                        )
                     })}
-               {isEmpty && <h3>You have not completed any task yet!</h3>}
+               {/* {isEmpty && <h3>You have not completed any task yet!</h3>} */}
             </ul>
          )}
       </section>

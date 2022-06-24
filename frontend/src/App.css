@@ -37,11 +37,14 @@
    list-style: none;
 }
 
+.task {
+   border: 1px solid black;
+}
+
 .task__item {
    display: flex;
    justify-content: space-between;
    align-items: center;
-   border: 1px solid black;
    padding: 1rem;
 }
 .task__item-title {
@@ -66,4 +69,73 @@
 .tasksFilter__completed-hide {
    display: flex;
    flex-direction: row-reverse;
+}
+
+/* SUBTASK*/
+.subtask {
+   margin-bottom: 1rem;
+}
+.subtask__add-form {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 0 1rem;
+}
+.subtask__form-inputs {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+}
+.subtask-label-desc,
+.subtask-label-price {
+   display: flex;
+   flex-direction: column;
+   font-size: 14px;
+}
+.subtask-label-desc {
+   width: 100%;
+}
+.subtask-label-price {
+   width: 25%;
+}
+.subtask-input {
+   padding: 8px 10px;
+   margin-top: 0.2rem;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+}
+.subtask__submit-btn {
+   background-color: #4caf50;
+   color: white;
+   padding: 8px 10px;
+   margin: 8px 0;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+}
+
+.subtask__content {
+   display: flex;
+   flex-direction: column;
+   list-style: none;
+   padding: 0 1rem 0;
+}
+
+.subtask__content-details {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   margin: 0;
+}
+.subtaskitem {
+   display: flex;
+   gap: 3rem;
+}
+
+.subtaskitem-handler {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 1rem;
 }

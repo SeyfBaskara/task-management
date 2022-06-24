@@ -2,14 +2,15 @@ import React, { useState } from 'react'
 import { ITasks } from '../../types'
 import { useAppDispatch } from '../../redux/hooks'
 import { updateTask, deleteTask } from '../../redux/task/taskSlice'
+import SubTask from './SubTask'
 
 interface IProps {
    task: ITasks
 }
 
 const Task = ({ task }: IProps): JSX.Element => {
-   const [isEdit, setIsEdit] = useState(false)
-   const [title, setTitle] = useState(task.title)
+   const [isEdit, setIsEdit] = useState<boolean>(false)
+   const [title, setTitle] = useState<string>(task.title)
    const dispatch = useAppDispatch()
 
    const onChangeCheckboxHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,24 +41,27 @@ const Task = ({ task }: IProps): JSX.Element => {
 
    return (
       <>
-         <div className="task__item">
-            {isEdit ? (
-               <input type="text" value={title} onChange={onChangeEditHandle} />
-            ) : (
-               <a
-                  href={`/#${task._id}`}
-                  className="task__item-title"
-                  style={task.completed ? { color: 'green' } : { color: 'black' }}
-               >
-                  {task.title}
-               </a>
-            )}
-            <div className="task__item-handler">
-               <input type="checkbox" checked={task.completed} onChange={onChangeCheckboxHandle} />
-               <button onClick={() => handleDelete(task._id!)}>Delete</button>
-               <button onClick={() => handleEdit(task._id!)}>{!isEdit ? 'Edit' : 'Add'}</button>
+         <section className="task">
+            <div className="task__item">
+               {isEdit ? (
+                  <input type="text" value={title} onChange={onChangeEditHandle} />
+               ) : (
+                  <a
+                     href={`/#${task._id}`}
+                     className="task__item-title"
+                     style={task.completed ? { color: 'green' } : { color: 'black' }}
+                  >
+                     {task.title}
+                  </a>
+               )}
+               <div className="task__item-handler">
+                  <input type="checkbox" checked={task.completed} onChange={onChangeCheckboxHandle} />
+                  <button onClick={() => handleDelete(task._id!)}>Delete</button>
+                  <button onClick={() => handleEdit(task._id!)}>{!isEdit ? 'Edit' : 'Add'}</button>
+               </div>
             </div>
-         </div>
+            <SubTask id={task._id} />
+         </section>
       </>
    )
 }
